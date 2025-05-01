@@ -17,7 +17,7 @@ import random
 
 # Config
 input_data_dir = "./data/"
-base_model_name = "Qwen/Qwen3-8B-Base"
+base_model_name = "Qwen/Qwen2.5-7B"
 padding_side_req = "right" #by default mistral uses left, but trl has overflow issues with left padding.
 output_dir = "./kto_0.03"
 max_seq_length = 2048
@@ -149,7 +149,7 @@ def initialize_tokenizer_and_model():
     tokenizer = AutoTokenizer.from_pretrained(base_model_name, 
                                               add_bos_token=False, 
                                               add_eos_token=False)
-    tokenizer.pad_token = tokenizer.unk_token #If you set the eos_token as a padding token, the tokenizer will set the eos_token attention mask as “0”. The model will tend to ignore the eos_token and might over-generate tokens, which is not ideal for a down-streaming task. A more suitable option will be unk_token , because of its rarity, it will barely degrade the model’s performance even if we set its attention mask to “0” (i.e., set it as a padding token)
+    tokenizer.pad_token = tokenizer.eos_token #If you set the eos_token as a padding token, the tokenizer will set the eos_token attention mask as “0”. The model will tend to ignore the eos_token and might over-generate tokens, which is not ideal for a down-streaming task. A more suitable option will be unk_token , because of its rarity, it will barely degrade the model’s performance even if we set its attention mask to “0” (i.e., set it as a padding token)
     new_specials = {"bos_token": "<bos>"}  
     num_added_toks = tokenizer.add_special_tokens(new_specials)
     tokenizer.padding_side = padding_side_req
@@ -164,7 +164,7 @@ def main():
     training_args = KTOConfig(
         output_dir=output_dir,
         warmup_ratio=0.1,
-        per_device_train_batch_size=8,
+        per_device_train_batch_size=1,
         num_train_epochs=2,
         gradient_accumulation_steps=1,
         gradient_checkpointing=True,
