@@ -40,6 +40,11 @@ To replicate the experiments, the authors used **AWS SageMaker** with the `pytor
    ```
 
 2. Directly run the notebook
+    There are four folders: 
+    - Mistral-offline: offline UNA for Mistral
+    - Mistral-online: online UNA for Mistral
+    - Llama-offline: offline UNA for Llama
+    - Qwen-offline: offline UNA for Qwen
    
 ---
 
