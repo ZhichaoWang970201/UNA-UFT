@@ -48,6 +48,12 @@ To replicate the experiments, the authors used **AWS SageMaker** with the `pytor
    
 ---
 
+## EVAL: for parsing the log
+
+'''
+ python parse_UNA_exp_log.py
+'''
+
 ## 🌟 Key Contributions
 
 1. **UNA**: Simplifies RLHF by replacing reinforcement learning with stable supervised learning.
